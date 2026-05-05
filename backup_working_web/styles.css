@@ -1,0 +1,331 @@
+/* CSS Variables - Congo National Colors & Premium Theme */
+:root {
+    --congo-green: #009543;
+    --congo-yellow: #FBDE4A;
+    --congo-red: #DC241F;
+    --bg-color: #f8faf9;
+    --text-dark: #121212;
+    --text-muted: #5f6368;
+    --card-bg: rgba(255, 255, 255, 0.15);
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: var(--text-dark);
+    /* Subtle background gradient with hints of Congo colors */
+    background: radial-gradient(circle at top left, rgba(0,149,67,0.03) 0%, transparent 40%),
+                radial-gradient(circle at bottom right, rgba(220,36,31,0.03) 0%, transparent 40%),
+                linear-gradient(135deg, #f8faf9 0%, #ffffff 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-x: hidden;
+}
+
+.landing-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3rem;
+    padding: 2rem;
+    width: 100%;
+    max-width: 1100px; /* Expanded for grid */
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    width: 100%;
+    animation: fadeInUp 0.8s ease-out 0.6s both;
+}
+
+.description-section {
+    width: 100%;
+    animation: fadeInUp 0.8s ease-out 0.4s both;
+}
+
+.description-text {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: var(--text-dark);
+    margin: 0;
+    text-align: left;
+}
+
+.logo-section {
+    animation: fadeInDown 0.8s ease-out;
+    background: var(--card-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    padding: 1.5rem 2.5rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
+}
+
+.logo {
+    max-width: 100%;
+    width: 320px;
+    height: auto;
+    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.05));
+    transition: var(--transition);
+}
+
+.logo:hover {
+    transform: translateY(-5px);
+    filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.1));
+}
+
+.clock-section {
+    animation: fadeInUp 0.8s ease-out 0.2s both;
+}
+
+/* Premium Glassmorphism Design */
+.glass-card {
+    background: var(--card-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 24px;
+    padding: 2.5rem 4rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
+    /* Congo Green accent border */
+    border-top: 5px solid var(--congo-green);
+    position: relative;
+    overflow: hidden;
+    transition: var(--transition);
+}
+
+.glass-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(255,255,255,0.4) 0%, transparent 100%);
+    pointer-events: none;
+}
+
+.glass-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.06);
+}
+
+.clock-label {
+    margin: 0 0 0.75rem 0;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+}
+
+.clock-time {
+    margin: 0;
+    font-size: 4rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    letter-spacing: -0.02em;
+    font-variant-numeric: tabular-nums;
+}
+
+/* Form Styling */
+.crowdsource-section {
+    width: 100%;
+    animation: fadeInUp 0.8s ease-out 0.4s both;
+}
+
+.form-card {
+    padding: 2.5rem;
+}
+
+.form-title {
+    margin: 0 0 2rem 0;
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--text-dark);
+}
+
+.translation-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: left;
+}
+
+.form-group label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    margin-left: 4px;
+}
+
+.form-group input, 
+.form-group select, 
+.form-group textarea {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    padding: 1rem;
+    font-family: inherit;
+    font-size: 1rem;
+    color: var(--text-dark);
+    transition: var(--transition);
+}
+
+.form-group input:focus, 
+.form-group select:focus, 
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--congo-green);
+    background: white;
+    box-shadow: 0 0 0 4px rgba(0, 149, 67, 0.05);
+}
+
+.btn-submit {
+    margin-top: 1rem;
+    background: var(--congo-green);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 1rem 2rem;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: 0 10px 20px rgba(0, 149, 67, 0.2);
+}
+
+.btn-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 15px 30px rgba(0, 149, 67, 0.3);
+    background: #00803a;
+}
+
+.btn-submit:active {
+    transform: translateY(0);
+}
+
+.btn-submit:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+.status-message {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border-radius: 8px;
+    transition: var(--transition);
+    min-height: 20px;
+}
+
+.status-success {
+    color: #1b5e20;
+}
+
+.status-error {
+    color: var(--congo-red);
+}
+
+/* Animations */
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 800px) {
+    .grid-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .logo {
+        width: 260px;
+    }
+    .glass-card {
+        padding: 2rem 1.5rem;
+    }
+    .clock-time {
+        font-size: 3rem;
+    }
+    .form-card {
+        padding: 1.5rem;
+    }
+}
+
+/* Floating Background Animation */
+#floating-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -1;
+    pointer-events: none;
+}
+
+.floating-word {
+    position: absolute;
+    color: var(--congo-green);
+    opacity: 0.15;
+    font-weight: 700;
+    white-space: nowrap;
+    user-select: none;
+    animation: floatUp linear infinite;
+}
+
+@keyframes floatUp {
+    0% {
+        transform: translateY(110vh) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.15;
+    }
+    90% {
+        opacity: 0.15;
+    }
+    100% {
+        transform: translateY(-10vh) rotate(20deg);
+        opacity: 0;
+    }
+}
+

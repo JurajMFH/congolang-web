@@ -1,0 +1,123 @@
+{
+  "lesson_id": 1,
+  "topic": "Salutations & Introductions",
+  "phrases": [
+    {
+      "id": 1,
+      "french": "Bonjour",
+      "translations": [
+        {
+          "lang": "lin",
+          "text": "Mbote",
+          "audio": "assets/audio/lin_mbote.mp3",
+          "metadata": {
+            "root": "bota",
+            "prefix": "m-",
+            "context": "Universal greeting",
+            "tone": "High-Low"
+          }
+        },
+        {
+          "lang": "mkw",
+          "text": "Mbote",
+          "audio": "assets/audio/mkw_mbote.mp3",
+          "metadata": {
+            "root": "bota",
+            "prefix": "m-",
+            "context": "Common with Lingala",
+            "tone": "Flat"
+          }
+        },
+        {
+          "lang": "ldi",
+          "text": "Mbote",
+          "audio": "assets/audio/ldi_mbote.mp3",
+          "metadata": {
+            "root": "bota",
+            "prefix": "m-",
+            "context": "Shared Bantu root",
+            "tone": "High"
+          }
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "french": "Comment ça va ?",
+      "translations": [
+        {
+          "lang": "lin",
+          "text": "Sango nini?",
+          "audio": "assets/audio/lin_sango_nini.mp3",
+          "metadata": {
+            "root": "sango",
+            "prefix": "",
+            "context": "Literally: \"What news?\"",
+            "tone": "Low-Low"
+          }
+        },
+        {
+          "lang": "mkw",
+          "text": "Inki sango?",
+          "audio": "assets/audio/mkw_inki_sango.mp3",
+          "metadata": {
+            "root": "sango",
+            "prefix": "inki",
+            "context": "Kongo influenced",
+            "tone": "Flat"
+          }
+        },
+        {
+          "lang": "ldi",
+          "text": "Nuni sango?",
+          "audio": "assets/audio/ldi_nuni_sango.mp3",
+          "metadata": {
+            "root": "sango",
+            "prefix": "nuni",
+            "context": "Specific to Lari/Pool",
+            "tone": "High"
+          }
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "french": "Merci",
+      "translations": [
+        {
+          "lang": "lin",
+          "text": "Matondo",
+          "audio": "assets/audio/lin_matondo.mp3",
+          "metadata": {
+            "root": "tondo",
+            "prefix": "ma-",
+            "context": "Root meaning gratitude",
+            "tone": "Low-Low"
+          }
+        },
+        {
+          "lang": "mkw",
+          "text": "Melesi",
+          "audio": "assets/audio/mkw_melesi.mp3",
+          "metadata": {
+            "root": "merci",
+            "prefix": "",
+            "context": "Loan word from French",
+            "tone": "Flat"
+          }
+        },
+        {
+          "lang": "ldi",
+          "text": "Ntondele",
+          "audio": "assets/audio/ldi_ntondele.mp3",
+          "metadata": {
+            "root": "tondo",
+            "prefix": "n-",
+            "context": "Pure Bantu form",
+            "tone": "High-Falling"
+          }
+        }
+      ]
+    }
+  ]
+}

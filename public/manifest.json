@@ -1,0 +1,17 @@
+{
+  "name": "CongoLang",
+  "short_name": "CongoLang",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#f8faf9",
+  "theme_color": "#009543",
+  "description": "Offline-First translation platform for Congolese languages.",
+  "icons": [
+    {
+      "src": "congolang_logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

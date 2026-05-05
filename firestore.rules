@@ -1,0 +1,25 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Drop-box policy for crowdsourced translations
+    // Citizens can submit translations anonymously (create),
+    // but cannot see, modify, or delete existing data (secure ingestion).
+    match /crowdsourced_translations/{translation} {
+      allow create: if true;
+      allow read, update, delete: if false;
+    }
+
+    // Drop-box policy for contact/volunteer messages
+    match /contact_messages/{message} {
+      allow create: if true;
+      allow read, update, delete: if false;
+    }
+    
+    // Default deny for all other collections
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
