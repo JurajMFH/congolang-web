@@ -25,9 +25,37 @@ body, html {
                 radial-gradient(circle at bottom right, rgba(220,36,31,0.03) 0%, transparent 40%),
                 linear-gradient(135deg, #f8faf9 0%, #ffffff 100%);
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: flex-start;
     align-items: center;
     overflow-x: hidden;
+}
+
+.top-time-bar {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    background-color: var(--bg-color);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    text-align: center;
+    padding: 10px 0;
+    z-index: 1000;
+    box-shadow: 0px 2px 10px rgba(0,0,0,0.05);
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+.top-time-bar .clock-label {
+    margin: 0;
+    font-size: 0.7rem;
+}
+
+.clock-time-mini {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--congo-green);
+    letter-spacing: 0.05em;
 }
 
 .landing-container {

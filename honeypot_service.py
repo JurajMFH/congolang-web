@@ -1,54 +1,61 @@
+"""
+honeypot_service.py - Gold Standard Seeding
+"""
 import sqlite3
-import os
-from datasets import load_dataset
-from huggingface_hub import login
+import logging
 
-# --------------------------------------------------------------------------
-# Environment & Authentication Troubleshooting
-# --------------------------------------------------------------------------
-HF_TOKEN = os.environ.get("HF_TOKEN")
-if not HF_TOKEN:
-    print("[!] WARNING: HF_TOKEN environment variable not found in CMD.")
-    print("[!] FIXED ACTION: Please run 'set HF_TOKEN=your_token' before execution.")
-    HF_TOKEN = "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"
+logging.basicConfig(level=logging.INFO, format="%(asctime)s - [%(levelname)s] - honeypot_service: %(message)s")
+DB_PATH = 'congolang_pan_congo.db'
 
-DB_NAME = "congolang_pan_congo.db"
-
-def seed_honeypots():
-    if HF_TOKEN:
-        login(token=HF_TOKEN)
-    conn = sqlite3.connect(DB_NAME)
-    c = conn.cursor()
+def seed_honeypots(conn, n=200):
+    cursor = conn.cursor()
+    total_seeded = 0
+    languages = ['lin', 'mkw', 'swc', 'lua']
     
-    print("Seeding 200 Gold Standard honeypot traps from FLORES (with trust_remote_code=True)...")
+    for lang in languages:
+        # Select n records per language from the target source
+        cursor.execute('''
+            SELECT id FROM records
+            WHERE language_code = ? 
+            AND source_url LIKE '%openlanguagedata/flores_plus%'
+            AND status != 'STATUS_GOLD_STANDARD'
+            LIMIT ?
+        ''', (lang, n))
+        
+        records = cursor.fetchall()
+        
+        if not records:
+            logging.warning(f"No flores_plus records found for language {lang}")
+            continue
+            
+        record_ids = [r[0] for r in records]
+        
+        cursor.execute(f'''
+            UPDATE records
+            SET is_honeypot = 1, status = 'STATUS_GOLD_STANDARD'
+            WHERE id IN ({','.join(['?']*len(record_ids))})
+        ''', record_ids)
+        
+        seeded = cursor.rowcount
+        total_seeded += seeded
+        logging.info(f"Seeded {seeded} honeypots for {lang}.")
+        
+    conn.commit()
+    return total_seeded
+
+def run():
+    logging.info("Starting honeypot seeding...")
     try:
-        # Added trust_remote_code=True per HF security policy
-        flores = load_dataset("facebook/flores", "fra_Latn-lin_Latn", split="devtest", streaming=True, trust_remote_code=True)
-        honeypots = []
-        count = 0
-        for item in flores:
-            if count >= 200:
-                break
-            
-            # Match the FLORES schema
-            data = item.get('translation', {})
-            text = data.get('lin_Latn')
-            
-            if text:
-                honeypots.append(('lin', 'DRC_KINSHASA', text, 'FORMAL', 'STATUS_GOLD_STANDARD', 1))
-                count += 1
-        
-        c.executemany('''
-            INSERT INTO records (language_code, region_target, normalized_text, register_type, status, is_honeypot)
-            VALUES (?,?,?,?,?,?)
-        ''', honeypots)
-        
-        conn.commit()
-        print(f"Successfully seeded {count} honeypots.")
-    except Exception as e:
-        print(f"Error seeding honeypots: {e}")
+        conn = sqlite3.connect(DB_PATH)
+        seeded_count = seed_honeypots(conn, n=200)
+        logging.info(f"Total honeypots seeded: {seeded_count}")
+        return seeded_count
+    except sqlite3.Error as e:
+        logging.error(f"Database error: {e}")
+        return 0
     finally:
-        conn.close()
+        if 'conn' in locals() and conn:
+            conn.close()
 
 if __name__ == "__main__":
-    seed_honeypots()
+    run()
