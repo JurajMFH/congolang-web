@@ -1,1 +1,16 @@
-# congolang
+name: Deploy to Firebase Hosting on merge
+on:
+  push:
+    branches:
+      - congolang
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_CONGOLANG }}'
+          channelId: live
+          projectId: congolang
