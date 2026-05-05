@@ -1,1 +1,1 @@
-# congolang-web
+# congolang
