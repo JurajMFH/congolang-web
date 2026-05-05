@@ -1,20 +1,23 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CongoLang | Alpha</title>
-    
+
     <!-- Import Google Fonts (Inter) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    
+
     <link rel="stylesheet" href="styles.css">
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#009543">
-    <meta name="description" content="Plateforme CongoLang - Apprenez les langues du Congo avec une technologie moderne.">
+    <meta name="description"
+        content="Plateforme CongoLang - Apprenez les langues du Congo avec une technologie moderne.">
 </head>
+
 <body>
     <div class="top-time-bar">
         <p class="clock-label">Heure de Brazzaville</p>
@@ -33,9 +36,8 @@
                 <p class="clock-label">À propos de CongoLang</p>
                 <h2 class="form-title">Notre Mission</h2>
                 <p class="description-text">
-                    CongoLang est une plateforme numérique dédiée à la préservation et à l'enseignement des langues autochtones de la République du Congo. 
-                    Nous recherchons des bénévoles passionnés qui comprennent les langues africaines et congolaises. 
-                    Aidez-nous à collecter des mots et leurs traductions pour la préparation de nos futures leçons éducatives !
+                    CongoLang préserve et enseigne les langues autochtones du Congo. Vous parlez une langue congolaise ?
+                    Rejoignez-nous pour collecter et traduire des mots destinés à nos futures leçons !
                 </p>
             </div>
         </section>
@@ -62,7 +64,7 @@
                 <div class="glass-card form-card">
                     <p class="clock-label">Contribuer</p>
                     <h2 class="form-title">Proposer une Traduction</h2>
-                    
+
                     <form id="translation-form" class="translation-form">
                         <div class="form-group">
                             <label for="source_lang">Langue Source</label>
@@ -73,12 +75,12 @@
                                 <option value="sk">Slovaque</option>
                             </select>
                         </div>
-                        
+
                         <div class="form-group">
                             <label for="source_word">Mot Source</label>
                             <input type="text" id="source_word" placeholder="Ex: Bonjour" required>
                         </div>
-                        
+
                         <div class="form-group">
                             <label for="target_lang">Langue Cible</label>
                             <select id="target_lang" required>
@@ -90,14 +92,14 @@
                                 <option value="mdw">Mbochi</option>
                             </select>
                         </div>
-                        
+
                         <div class="form-group">
                             <label for="translation_text">Traduction</label>
                             <textarea id="translation_text" rows="2" placeholder="Ex: Mbote" required></textarea>
                         </div>
-                        
+
                         <button type="submit" id="submit-btn" class="btn-submit">Soumettre</button>
-                        
+
                         <div id="status-message" class="status-message"></div>
                     </form>
                 </div>
@@ -108,30 +110,32 @@
                 <div class="glass-card form-card">
                     <p class="clock-label">Devenir Bénévole</p>
                     <h2 class="form-title">Nous Contacter</h2>
-                    
+
                     <form id="contact-form" class="translation-form">
                         <div class="form-group">
                             <label for="contact_name">Nom et Prénom</label>
                             <input type="text" id="contact_name" placeholder="Votre nom" required>
                         </div>
-                        
+
                         <div class="form-group">
                             <label for="contact_email">E-mail</label>
                             <input type="email" id="contact_email" placeholder="votre@email.com" required>
                         </div>
-                        
+
                         <div class="form-group">
                             <label for="contact_languages">Langues maîtrisées</label>
                             <input type="text" id="contact_languages" placeholder="Ex: Lingala, Français">
                         </div>
-                        
+
                         <div class="form-group">
                             <label for="contact_message">Message</label>
-                            <textarea id="contact_message" rows="4" placeholder="Connaissez-vous des langues peu documentées ? Aidez-nous à bâtir la communauté." required></textarea>
+                            <textarea id="contact_message" rows="4"
+                                placeholder="Connaissez-vous des langues peu documentées ? Aidez-nous à bâtir la communauté."
+                                required></textarea>
                         </div>
-                        
+
                         <button type="submit" id="contact-submit-btn" class="btn-submit">Envoyer le message</button>
-                        
+
                         <div id="contact-status-message" class="status-message"></div>
                     </form>
                 </div>
@@ -151,4 +155,5 @@
         }
     </script>
 </body>
+
 </html>
