@@ -152,12 +152,22 @@
 <script src="app.js" type="module"></script>
 <script>
     if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-            navigator.serviceWorker.register('/service-worker.js')
-                .then(reg => console.log('SW registered!', reg))
-                .catch(err => console.error('SW failed', err));
-        });
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/service-worker.js').then(reg => {
+          console.log('SW registered!', reg);
+          reg.addEventListener('updatefound', () => {
+            const newWorker = reg.installing;
+            newWorker.addEventListener('statechange', () => {
+              if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                if (confirm('Une nouvelle version de CongoLang est disponible ! Cliquez sur OK pour mettre à jour.')) {
+                  window.location.reload();
+                }
+              }
+            });
+          });
+        }).catch(err => console.log('SW registration failed', err));
+      });
     }
-</script>
+  </script>
 
 </html>
