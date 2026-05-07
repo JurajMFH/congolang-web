@@ -97,7 +97,7 @@
     <div id="step-final" class="card">
         <h2>Votez pour votre Logo</h2>
         <p>Quel concept de logo avez-vous préféré ?</p>
-        <form id="vote-form" onsubmit="submitVote(event)">
+        <form id="vote-form" onsubmit="event.preventDefault(); submitVote(document.getElementById('logo-choice').value);">
             <select id="logo-choice" required>
                 <option value="" disabled selected>Choisissez un numéro (1-10)</option>
                 <option value="1">Logo 1</option>
@@ -115,6 +115,9 @@
         </form>
     </div>
 
+    <script src="/__/firebase/10.7.1/firebase-app-compat.js"></script>
+    <script src="/__/firebase/10.7.1/firebase-firestore-compat.js"></script>
+    <script src="/__/firebase/init.js"></script>
     <script>
         const numbers = [
             { num: 1, lin: 'Moko', mun: 'Mosi' },
@@ -158,10 +161,20 @@
             document.getElementById('step-final').classList.add('active');
         }
 
-        function submitVote(e) {
-            e.preventDefault();
-            alert("Merci pour votre vote!");
-            window.location.href = "index.html";
+        async function submitVote(logoId) {
+            const db = firebase.firestore();
+            try {
+                await db.collection('logo_votes').add({
+                    logoId: logoId,
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                    userAgent: navigator.userAgent
+                });
+                alert('Merci pour votre vote !');
+                window.location.href = 'index.html';
+            } catch (error) {
+                console.error("Erreur de vote: ", error);
+                alert('Erreur lors du vote. Veuillez réessayer.');
+            }
         }
     </script>
 </body>
