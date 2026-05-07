@@ -97,7 +97,7 @@
     <div id="step-final" class="card">
         <h2>Votez pour votre Logo</h2>
         <p>Quel concept de logo avez-vous préféré ?</p>
-        <form id="vote-form" onsubmit="event.preventDefault(); submitVote(document.getElementById('logo-choice').value);">
+        <form id="vote-form" onsubmit="submitVote(event);">
             <select id="logo-choice" required>
                 <option value="" disabled selected>Choisissez un numéro (1-10)</option>
                 <option value="1">Logo 1</option>
@@ -161,19 +161,36 @@
             document.getElementById('step-final').classList.add('active');
         }
 
-        async function submitVote(logoId) {
-            const db = firebase.firestore();
+        async function submitVote(event) {
+            if (event) event.preventDefault();
+            console.log("DEBUG 1: submitVote triggered!");
+            
+            // Strict SDK check
+            if (typeof firebase === 'undefined' || typeof firebase.firestore === 'undefined') { 
+                alert("FATAL ERROR: Firebase SDK is NOT loaded. The reserved URLs (/__/firebase/...) might be blocked by Cloudflare or you are testing locally without the Firebase CLI."); 
+                return; 
+            }
+            
+            console.log("DEBUG 2: Firebase SDK found. Attempting Firestore write...");
+            const logoId = document.getElementById('logo-choice').value;
+            
             try {
+                const db = firebase.firestore();
                 await db.collection('logo_votes').add({
                     logoId: logoId,
                     timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-                    userAgent: navigator.userAgent
+                    userAgent: navigator.userAgent,
+                    debug_mode: true
                 });
-                alert('Merci pour votre vote !');
-                // // window.location.href = "index.html"; // Docasne vypnute pre debugovanie // Docasne vypnute pre debugovanie
+                
+                console.log("DEBUG 3: Write complete.");
+                alert("SUCCESS: Document written to Firestore!");
+                
+                // Redirect disabled for inspection
+                // window.location.href = "index.html";
             } catch (error) {
-                console.error("Erreur de vote: ", error);
-                alert('Erreur lors du vote. Veuillez réessayer.');
+                console.error("DEBUG ERROR: ", error);
+                alert("FIRESTORE ERROR: " + error.message);
             }
         }
     </script>
