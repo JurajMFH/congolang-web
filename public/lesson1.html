@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CongoLang - Leçon 1 & Vote Logo</title>
+    <style>
+        :root {
+            --primary: #009543;
+            --bg-color: #f4f7f6;
+            --card-bg: #ffffff;
+            --text-color: #333333;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            padding: 30px;
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+            display: none;
+        }
+        .card.active {
+            display: block;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 15px 0;
+            object-fit: cover;
+        }
+        h1, h2, h3 {
+            color: var(--primary);
+        }
+        p {
+            font-size: 1.1em;
+            line-height: 1.5;
+        }
+        .lang-text {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        .btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 1.1em;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 20px;
+            width: 100%;
+            transition: opacity 0.2s;
+        }
+        .btn:hover {
+            opacity: 0.9;
+        }
+        select {
+            width: 100%;
+            padding: 10px;
+            font-size: 1em;
+            margin: 15px 0;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Intro Screen -->
+    <div id="step-intro" class="card active">
+        <h2>Bienvenue sur CongoLang !</h2>
+        <img src="../assets/11.png" alt="CongoLang Welcome" onerror="this.src='https://via.placeholder.com/400x300?text=Welcome'">
+        <p>Notre mission est de vous apprendre les nombres de 1 à 10 en Lingala et Munukutuba.</p>
+        <p>Aujourd'hui, pour chaque nombre, nous vous présenterons un concept de logo différent. À la fin, vous pourrez voter pour votre logo préféré !</p>
+        <button class="btn" onclick="nextStep(1)">Commencer</button>
+    </div>
+
+    <!-- Lesson Screens will be injected here -->
+    <div id="lesson-container"></div>
+
+    <!-- Final Screen -->
+    <div id="step-final" class="card">
+        <h2>Votez pour votre Logo</h2>
+        <p>Quel concept de logo avez-vous préféré ?</p>
+        <form id="vote-form" onsubmit="submitVote(event)">
+            <select id="logo-choice" required>
+                <option value="" disabled selected>Choisissez un numéro (1-10)</option>
+                <option value="1">Logo 1</option>
+                <option value="2">Logo 2</option>
+                <option value="3">Logo 3</option>
+                <option value="4">Logo 4</option>
+                <option value="5">Logo 5</option>
+                <option value="6">Logo 6</option>
+                <option value="7">Logo 7</option>
+                <option value="8">Logo 8</option>
+                <option value="9">Logo 9</option>
+                <option value="10">Logo 10</option>
+            </select>
+            <button type="submit" class="btn">Soumettre mon vote</button>
+        </form>
+    </div>
+
+    <script>
+        const numbers = [
+            { num: 1, lin: 'Moko', mun: 'Mosi' },
+            { num: 2, lin: 'Mibale', mun: 'Zole' },
+            { num: 3, lin: 'Misato', mun: 'Tatu' },
+            { num: 4, lin: 'Minei', mun: 'Iya' },
+            { num: 5, lin: 'Mitano', mun: 'Tanu' },
+            { num: 6, lin: 'Motoba', mun: 'Sambanu' },
+            { num: 7, lin: 'Sambo', mun: 'Nsambuadi' },
+            { num: 8, lin: 'Mwambe', mun: 'Nana' },
+            { num: 9, lin: 'Libwa', mun: 'Vwa' },
+            { num: 10, lin: 'Zomi', mun: 'Kumi' }
+        ];
+
+        const container = document.getElementById('lesson-container');
+        
+        // Generate lesson steps
+        numbers.forEach((item, index) => {
+            const nextIdx = index + 2; // intro is 0, steps are 1-10, final is 11
+            const nextCall = index === 9 ? "showFinal()" : `nextStep(${nextIdx})`;
+            
+            const cardHtml = `
+                <div id="step-${index + 1}" class="card">
+                    <h2>Nombre ${item.num}</h2>
+                    <img src="../assets/${item.num}.png" alt="Logo ${item.num}" onerror="this.src='https://via.placeholder.com/400x300?text=Logo+${item.num}'">
+                    <div class="lang-text">Lingala: <span style="color:var(--primary);">${item.lin}</span></div>
+                    <div class="lang-text">Munukutuba: <span style="color:var(--primary);">${item.mun}</span></div>
+                    <button class="btn" onclick="${nextCall}">Suivant</button>
+                </div>
+            `;
+            container.innerHTML += cardHtml;
+        });
+
+        function nextStep(step) {
+            document.querySelectorAll('.card').forEach(c => c.classList.remove('active'));
+            document.getElementById(`step-${step}`).classList.add('active');
+        }
+
+        function showFinal() {
+            document.querySelectorAll('.card').forEach(c => c.classList.remove('active'));
+            document.getElementById('step-final').classList.add('active');
+        }
+
+        function submitVote(e) {
+            e.preventDefault();
+            alert("Merci pour votre vote!");
+            window.location.href = "index.html";
+        }
+    </script>
+</body>
+</html>
