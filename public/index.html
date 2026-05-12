@@ -15,20 +15,53 @@
             color: #ffffff;
             font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             text-align: center;
+            overflow: hidden; /* Prevent scrollbars from floating elements */
+        }
+        .floating-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+            pointer-events: none;
+        }
+        .floating-lang {
+            position: absolute;
+            color: #ffffff;
+            opacity: 0.12; /* Low opacity */
+            font-weight: 700;
+            white-space: nowrap;
+            animation: floatUp linear infinite;
+        }
+        @keyframes floatUp {
+            0% {
+                transform: translateY(110vh);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.12;
+            }
+            90% {
+                opacity: 0.12;
+            }
+            100% {
+                transform: translateY(-20vh);
+                opacity: 0;
+            }
         }
         .container {
             display: flex;
             flex-direction: column;
             align-items: center;
+            z-index: 10;
         }
         .logo {
-            font-size: 5rem;
-            font-weight: 800;
-            margin-bottom: 1rem;
-            letter-spacing: -1px;
-            background: linear-gradient(90deg, #ffffff, #aaaaaa);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            max-width: 80%;
+            width: 300px;
+            height: auto;
+            margin-bottom: 1.5rem;
         }
         .dynamic-text {
             font-size: 1.5rem;
@@ -37,12 +70,14 @@
             opacity: 1;
             transition: opacity 0.5s ease-in-out;
             height: 2.5rem; /* Prevents jumping when text changes */
+            z-index: 10;
         }
     </style>
 </head>
 <body>
+    <div class="floating-bg" id="floatingBg"></div>
     <div class="container">
-        <div class="logo">congolang.cg</div>
+        <img src="assets/congolang_logo.png" alt="CongoLang Logo" class="logo">
         <div class="dynamic-text" id="dynamicText">Website under construction</div>
     </div>
 
@@ -70,6 +105,44 @@
                 textElement.style.opacity = 1;
             }, 500);
         }, 3000);
+
+        // Floating languages background logic
+        const backgroundLanguages = [
+            "Lingala", "Munukutuba", "Lari", "Vili", "Mbochi", 
+            "Teke", "Swahili", "Tshiluba", "English", "Français"
+        ];
+        
+        const floatingBg = document.getElementById('floatingBg');
+        
+        function createFloatingLanguage() {
+            const el = document.createElement('div');
+            el.className = 'floating-lang';
+            el.textContent = backgroundLanguages[Math.floor(Math.random() * backgroundLanguages.length)];
+            
+            // Randomize position, size, and animation duration
+            el.style.left = Math.random() * 90 + '%'; // 0 to 90%
+            
+            const size = Math.random() * 2 + 1.5; // 1.5rem to 3.5rem
+            el.style.fontSize = `${size}rem`;
+            
+            const duration = Math.random() * 20 + 15; // 15s to 35s
+            el.style.animationDuration = `${duration}s`;
+            
+            floatingBg.appendChild(el);
+            
+            // Clean up after animation
+            setTimeout(() => {
+                el.remove();
+            }, duration * 1000);
+        }
+        
+        // Initial batch to populate the screen
+        for(let i=0; i<12; i++) {
+            setTimeout(createFloatingLanguage, Math.random() * 5000);
+        }
+        
+        // Keep generating new ones over time
+        setInterval(createFloatingLanguage, 2500);
     </script>
 </body>
 </html>
