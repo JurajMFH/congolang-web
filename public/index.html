@@ -1,173 +1,75 @@
 <!DOCTYPE html>
-<html lang="fr">
-
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CongoLang | Alpha</title>
-
-    <!-- Import Google Fonts (Inter) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-
-    <link rel="stylesheet" href="styles.css">
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#009543">
-    <meta name="description"
-        content="Plateforme CongoLang - Apprenez les langues du Congo avec une technologie moderne.">
+    <title>congolang.cg - Under Construction</title>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #121212; /* Dark theme for a premium minimalist feel */
+            color: #ffffff;
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .logo {
+            font-size: 5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            letter-spacing: -1px;
+            background: linear-gradient(90deg, #ffffff, #aaaaaa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .dynamic-text {
+            font-size: 1.5rem;
+            font-weight: 300;
+            color: #cccccc;
+            opacity: 1;
+            transition: opacity 0.5s ease-in-out;
+            height: 2.5rem; /* Prevents jumping when text changes */
+        }
+    </style>
 </head>
-
 <body>
-    <div class="top-time-bar">
-        <p class="clock-label">Heure de Brazzaville</p>
-        <h1 id="congo-clock" class="clock-time-mini">--:--:--</h1>
+    <div class="container">
+        <div class="logo">congolang.cg</div>
+        <div class="dynamic-text" id="dynamicText">Website under construction</div>
     </div>
-    <div id="floating-background"></div>
-    <main class="landing-container">
-        <!-- Logo section -->
-        <header class="logo-section">
-            <img src="congolang_logo.png" alt="CongoLang Logo" class="logo" id="main-logo">
-        </header>
 
-        <!-- Project Description Section -->
-        <section class="description-section">
-            <div class="glass-card">
-                <br>
-                <div style="text-align: center; padding-bottom: 30px;"><a href="lesson_vote.html"
-                        style="display:inline-block; background-color:#28a745; color:white; padding:15px 25px; text-decoration:none; border-radius:8px; margin-top:20px; font-weight:bold; font-size:18px;">Commencer
-                        la Leçon 1 & Voter pour le Logo</a></div>
+    <script>
+        const phrases = [
+            "Na stránke sa pracuje", // Slovak
+            "Website under construction", // English
+            "Site en construction", // French
+            "Сайт в разработке", // Russian
+            "网站建设中", // Chinese
+            "Mosala ezali kosalema awa", // Lingala
+            "Kisalu ke salama awa", // Munukutuba
+            "Salu yita salama", // Lari
+            "Salu yi nsalama" // Vili
+        ];
+
+        let currentIndex = 1; // Start with index 1 because english is already shown
+        const textElement = document.getElementById('dynamicText');
+
+        setInterval(() => {
+            textElement.style.opacity = 0;
+            setTimeout(() => {
+                currentIndex = (currentIndex + 1) % phrases.length;
+                textElement.textContent = phrases[currentIndex];
+                textElement.style.opacity = 1;
+            }, 500);
+        }, 3000);
+    </script>
 </body>
-<p class="clock-label">À propos de CongoLang</p>
-<h2 class="form-title">Notre Mission</h2>
-<p class="description-text">
-    CongoLang préserve et enseigne les langues autochtones du Congo. Vous parlez une langue congolaise ?
-    Rejoignez-nous pour collecter et traduire des mots destinés à nos futures leçons !
-</p>
-</div>
-</section>
-
-<!-- Quick Learning Flashcards Section -->
-<section class="flashcard-section" id="flashcard-container-section" style="display:none;">
-    <div class="glass-card">
-        <p class="clock-label">Apprentissage Rapide</p>
-        <h2 class="form-title" id="lesson-topic">Chargement des leçons...</h2>
-        <div id="flashcard-display" class="flashcard-display">
-            <!-- Cards will be injected here -->
-        </div>
-        <div class="flashcard-controls">
-            <button id="prev-card" class="btn-secondary">Précédent</button>
-            <button id="next-card" class="btn-secondary">Suivant</button>
-        </div>
-    </div>
-</section>
-
-<!-- Main Content Grid -->
-<div class="grid-container">
-    <!-- Left Column: Crowdsourcing Translation Form -->
-    <section class="crowdsource-section">
-        <div class="glass-card form-card">
-            <p class="clock-label">Contribuer</p>
-            <h2 class="form-title">Proposer une Traduction</h2>
-
-            <form id="translation-form" class="translation-form">
-                <div class="form-group">
-                    <label for="source_lang">Langue Source</label>
-                    <select id="source_lang" required>
-                        <option value="">Sélectionner une langue source</option>
-                        <option value="fr">Français</option>
-                        <option value="en">Anglais</option>
-                        <option value="sk">Slovaque</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="source_word">Mot Source</label>
-                    <input type="text" id="source_word" placeholder="Ex: Bonjour" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="target_lang">Langue Cible</label>
-                    <select id="target_lang" required>
-                        <option value="">Sélectionner une langue</option>
-                        <option value="lin">Lingala</option>
-                        <option value="mkw">Munukutuba/Kituba</option>
-                        <option value="ldi">Lari</option>
-                        <option value="vif">Vili</option>
-                        <option value="mdw">Mbochi</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="translation_text">Traduction</label>
-                    <textarea id="translation_text" rows="2" placeholder="Ex: Mbote" required></textarea>
-                </div>
-
-                <button type="submit" id="submit-btn" class="btn-submit">Soumettre</button>
-
-                <div id="status-message" class="status-message"></div>
-            </form>
-        </div>
-    </section>
-
-    <!-- Right Column: Contact/Volunteer Form -->
-    <section class="contact-section">
-        <div class="glass-card form-card">
-            <p class="clock-label">Devenir Bénévole</p>
-            <h2 class="form-title">Nous Contacter</h2>
-
-            <form id="contact-form" class="translation-form">
-                <div class="form-group">
-                    <label for="contact_name">Nom et Prénom</label>
-                    <input type="text" id="contact_name" placeholder="Votre nom" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="contact_email">E-mail</label>
-                    <input type="email" id="contact_email" placeholder="votre@email.com" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="contact_languages">Langues maîtrisées</label>
-                    <input type="text" id="contact_languages" placeholder="Ex: Lingala, Français">
-                </div>
-
-                <div class="form-group">
-                    <label for="contact_message">Message</label>
-                    <textarea id="contact_message" rows="4"
-                        placeholder="Connaissez-vous des langues peu documentées ? Aidez-nous à bâtir la communauté."
-                        required></textarea>
-                </div>
-
-                <button type="submit" id="contact-submit-btn" class="btn-submit">Envoyer le message</button>
-
-                <div id="contact-status-message" class="status-message"></div>
-            </form>
-        </div>
-    </section>
-</div>
-</main>
-
-<script src="idb_manager.js"></script>
-<script src="app.js" type="module"></script>
-<script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/service-worker.js').then(reg => {
-          console.log('SW registered!', reg);
-          reg.addEventListener('updatefound', () => {
-            const newWorker = reg.installing;
-            newWorker.addEventListener('statechange', () => {
-              if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                if (confirm('Une nouvelle version de CongoLang est disponible ! Cliquez sur OK pour mettre à jour.')) {
-                  window.location.reload();
-                }
-              }
-            });
-          });
-        }).catch(err => console.log('SW registration failed', err));
-      });
-    }
-  </script>
-
 </html>
