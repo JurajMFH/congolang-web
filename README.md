@@ -1,5 +1,8 @@
 # 🇨🇩 CongoLang Web: Validation Portal for Central African Languages
 
+> **🌱 Project Status: Early Stage & Actively Evolving**
+> *CongoLang is a newly founded grassroots initiative. We are currently in our early development phase—building our platform, collecting our first MVP datasets, and continuously evolving. We welcome early feedback, collaboration, and support!*
+
 CongoLang is a grassroots, participatory Natural Language Processing (NLP) project dedicated to building open, high-quality, and human-validated datasets for under-resourced Central African languages (starting with Standard and Urban Lingala).
 
 This repository contains the frontend source code for our **Cloud Validation Portal** (https://congolang.cg), an integral part of our offline-first (Sneakernet) architecture.
