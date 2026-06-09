@@ -22,45 +22,17 @@
             /* Prevent scrollbars from floating elements */
         }
 
-        .floating-bg {
+        .floating-lang {
             position: absolute;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            z-index: 1;
-            pointer-events: none;
-        }
-
-        .floating-lang {
-            position: absolute;
             color: #000000;
             opacity: 0.12;
-            /* Low opacity */
             font-weight: 700;
             white-space: nowrap;
-            animation: floatUp linear infinite;
-        }
-
-        @keyframes floatUp {
-            0% {
-                transform: translateY(110vh);
-                opacity: 0;
-            }
-
-            10% {
-                opacity: 0.12;
-            }
-
-            90% {
-                opacity: 0.12;
-            }
-
-            100% {
-                transform: translateY(-20vh);
-                opacity: 0;
-            }
+            pointer-events: none;
+            will-change: transform;
+            transform: translate3d(0, 0, 0);
         }
 
         .container {
@@ -91,10 +63,51 @@
             position: relative;
             z-index: 100;
         }
+
+        .header-nav {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            z-index: 150;
+        }
+
+        .btn-portal {
+            display: inline-block;
+            padding: 0.6rem 1.2rem;
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: #ffffff;
+            background-color: #111111;
+            border: 1px solid #111111;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .btn-portal:hover {
+            background-color: #333333;
+            border-color: #333333;
+            transform: translateY(-1px);
+        }
+
+        @media (max-width: 480px) {
+            .header-nav {
+                top: 1rem;
+                right: 1rem;
+            }
+            .btn-portal {
+                padding: 0.5rem 1rem;
+                font-size: 0.8rem;
+            }
+        }
     </style>
 </head>
 
 <body>
+    <div class="header-nav">
+        <a href="validate.html" class="btn-portal">Validation Portal</a>
+    </div>
     <div class="floating-bg" id="floatingBg"></div>
     <div class="container">
         <img src="./congolang_logo.png" alt="CongoLang Logo" class="logo"
@@ -128,44 +141,148 @@
             }, 500);
         }, 3000);
 
-        // Floating languages background logic
+        // --- Interactive Physics Cloud Background ---
         const backgroundLanguages = [
             "Lingala", "Munukutuba", "Lari", "Vili", "Mbochi",
             "Teke", "Beembe", "Swahili", "Tshiluba", "Kikongo ya Leta",
             "Zande", "Ngbaka", "Mongo"
         ];
 
+        const logoSVGs = {
+            tiktok: `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.02 1.62 4.17.94.99 2.26 1.62 3.69 1.76v3.91c-1.39-.02-2.74-.47-3.89-1.28a7.846 7.846 0 0 1-2.92-3.66v9.33c.07 1.54-.38 3.12-1.3 4.36-1.57 2.22-4.52 3.15-7.14 2.24-2.61-.84-4.47-3.41-4.48-6.15.01-2.97 2.23-5.59 5.17-5.99.99-.15 2-.04 2.94.31v4.09c-.73-.42-1.58-.58-2.42-.42-1.44.22-2.58 1.48-2.62 2.94-.07 1.83 1.52 3.44 3.36 3.42 1.79.03 3.36-1.38 3.42-3.17.02-.63.01-11.45.01-11.45z"/></svg>`,
+            linkedin: `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M22.23 0H1.77C.8 0 0 .77 0 1.72v20.56C0 23.23.8 24 1.77 24h20.46c.98 0 1.77-.77 1.77-1.72V1.72C24 .77 23.2 0 22.23 0zM7.12 20.45H3.56V9H7.12v11.45zM5.34 7.43c-1.14 0-2.06-.92-2.06-2.06 0-1.14.92-2.06 2.06-2.06 1.14 0 2.06.92 2.06 2.06 0 1.14-.92 2.06-2.06 2.06zm15.11 13.02h-3.56v-5.6c0-1.34-.03-3.05-1.86-3.05-1.86 0-2.14 1.45-2.14 2.95v5.7H9.33V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29z"/></svg>`,
+            youtube: `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.163a3.003 3.003 0 0 0-2.11-2.11C19.517 3.545 12 3.545 12 3.545s-7.516 0-9.387.508a3.003 3.003 0 0 0-2.11 2.11C0 8.033 0 12 0 12s0 3.967.502 5.837a3.003 3.003 0 0 0 2.11 2.11c1.871.508 9.387.508 9.387.508s7.517 0 9.387-.508a3.003 3.003 0 0 0 2.11-2.11C24 15.967 24 12 24 12s0-3.967-.502-5.837zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>`,
+            github: `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.579.688.481C19.137 20.162 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>`,
+            facebook: `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>`,
+            instagram: `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>`,
+            snapchat: `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .03c-2.483 0-4.088 1.139-4.757 2.478-.178.356-.16.711-.062 1.067a6.837 6.837 0 0 0 1.245 2.134 5.922 5.922 0 0 1-.951.81c-.562.373-.801.765-.801 1.342 0 .436.213.783.587 1.022.373.24.871.32 1.423.231.142-.022.302-.058.462-.1.08.35.213.676.383.978.275.498.667.871 1.182 1.102.507.231 1.094.32 1.77.267v.462c0 .48-.09.916-.276 1.298-.186.373-.453.685-.809.934-.356.248-.791.435-1.298.56-.507.124-1.076.195-1.698.213-.622.018-1.289.018-2.001-.009-.436-.018-.756.09-1.013.267-.258.178-.382.49-.382.907v.142c0 .64.24 1.094.72 1.343.48.248 1.156.328 2.018.239.862-.088 1.832-.39 2.899-.897.124-.053.257-.098.39-.125.133-.026.249.027.356.16a5.795 5.795 0 0 0 1.013 1.049c.471.39.996.587 1.574.587a2.028 2.028 0 0 0 1.574-.587 5.795 5.795 0 0 0 1.013-1.049c.107-.133.223-.186.356-.16a2.802 2.802 0 0 0 .39.125c1.067.507 2.036.809 2.899.897.862.089 1.538.009 2.018-.239.48-.249.72-.703.72-1.343v-.142c0-.417-.124-.729-.382-.907-.257-.177-.577-.285-1.013-.267-.712.027-1.379.027-2.001.009-.507-.018-.942-.089-1.698-.213-.356-.058-.693-.16-1.023-.311v-.978c-.356-.249-.622-.56-.809-.934-.186-.382-.276-.818-.276-1.298v-.462c.676.053 1.263-.036 1.77-.267.515-.231.907-.604 1.182-1.102.17-.302.303-.628.383-.978.16.042.32.078.462.1.552.089 1.05.009 1.423-.231.374-.239.587-.586.587-1.022 0-.577-.239-.969-.801-1.342-.267-.178-.587-.449-.951-.81a6.837 6.837 0 0 0 1.245-2.134c.098-.356.116-.711.062-1.067C16.088 1.169 14.483.03 12 .03z"/></svg>`,
+            x: `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>`,
+            slack: `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M5.042 15.165a2.528 2.528 0 0 1-2.52 2.523 2.528 2.528 0 0 1-2.522-2.523 2.528 2.528 0 0 1 2.522-2.52h2.52v2.52zm1.261 0a2.528 2.528 0 0 1 2.52-2.52h5.043a2.528 2.528 0 0 1 2.522 2.52v5.042a2.528 2.528 0 0 1-2.522 2.52H8.823a2.528 2.528 0 0 1-2.52-2.52v-5.042zM8.823 5.043a2.528 2.528 0 0 1 2.52-2.52 2.528 2.528 0 0 1 2.522 2.52v2.52h-2.522a2.528 2.528 0 0 1-2.52-2.52zm0 1.261a2.528 2.528 0 0 1 2.52 2.52v5.043a2.528 2.528 0 0 1-2.522 2.522H3.78a2.528 2.528 0 0 1-2.522-2.522 2.528 2.528 0 0 1 2.522-2.52h5.043zm10.135 3.696a2.528 2.528 0 0 1 2.522-2.52 2.528 2.528 0 0 1 2.52 2.52 2.528 2.528 0 0 1-2.52 2.522h-2.522V10zm-1.262 0a2.528 2.528 0 0 1-2.52 2.52h-5.043a2.528 2.528 0 0 1-2.522-2.52V4.958a2.528 2.528 0 0 1 2.522-2.52h5.043a2.528 2.528 0 0 1 2.52 2.52v5.042zm-3.781 10.121a2.528 2.528 0 0 1-2.52 2.52 2.528 2.528 0 0 1-2.522-2.52v-2.52h2.522a2.528 2.528 0 0 1 2.52 2.52zm0-1.262a2.528 2.528 0 0 1-2.52-2.52v-5.043a2.528 2.528 0 0 1 2.522-2.522h5.043a2.528 2.528 0 0 1 2.522 2.522v5.043a2.528 2.528 0 0 1-2.522 2.52h-5.043z"/></svg>`,
+            huggingface: `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 22a10 10 0 1 1 10-10 10.011 10.011 0 0 1-10 10zm0-18a8 8 0 1 0 8 8 8.01 8.01 0 0 0-8-8zm4.5 9a.5.5 0 0 1 .5.5 4.5 4.5 0 0 1-9 0 .5.5 0 0 1 1 0 3.5 3.5 0 0 0 7 0 .5.5 0 0 1 .5-.5zM9 10a1 1 0 1 1-1 1 1 1 0 0 1 1-1zm6 0a1 1 0 1 1-1 1 1 1 0 0 1 1-1z"/></svg>`
+        };
+
+        const logoKeys = Object.keys(logoSVGs);
         const floatingBg = document.getElementById('floatingBg');
 
-        function createFloatingLanguage() {
+        // Physics Swarm State
+        let targetX = window.innerWidth / 2;
+        let targetY = window.innerHeight / 2;
+        const nodes = [];
+
+        // Track mouse movement
+        window.addEventListener('mousemove', (e) => {
+            targetX = e.clientX;
+            targetY = e.clientY;
+        });
+
+        // Request Orientation Permissions & Track Tilt for Mobile
+        window.addEventListener('click', () => {
+            if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
+                DeviceOrientationEvent.requestPermission().catch(console.error);
+            }
+        }, { once: true });
+
+        window.addEventListener('deviceorientation', (e) => {
+            if (e.beta !== null && e.gamma !== null) {
+                // gamma is left-to-right tilt (-90 to 90)
+                // beta is front-to-back tilt (-180 to 180)
+                const tiltX = Math.max(-45, Math.min(45, e.gamma)) / 45;
+                const tiltY = Math.max(-45, Math.min(45, e.beta - 45)) / 45; // center around typical 45 deg viewing tilt
+                
+                targetX = (window.innerWidth / 2) + (tiltX * (window.innerWidth / 2) * 0.85);
+                targetY = (window.innerHeight / 2) + (tiltY * (window.innerHeight / 2) * 0.85);
+            }
+        });
+
+        function createNode(isText, value) {
             const el = document.createElement('div');
             el.className = 'floating-lang';
-            el.textContent = backgroundLanguages[Math.floor(Math.random() * backgroundLanguages.length)];
+            
+            if (isText) {
+                el.textContent = value;
+            } else {
+                el.innerHTML = logoSVGs[value];
+                el.style.display = 'inline-flex';
+                el.style.alignItems = 'center';
+                el.style.justifyContent = 'center';
+            }
 
-            // Randomize position, size, and animation duration
-            el.style.left = Math.random() * 90 + '%'; // 0 to 90%
-
-            const size = Math.random() * 2 + 1.5; // 1.5rem to 3.5rem
+            const size = Math.random() * 2 + 1.2; // Size between 1.2rem and 3.2rem
             el.style.fontSize = `${size}rem`;
+            const svg = el.querySelector('svg');
+            if (svg) {
+                svg.style.width = `${size}rem`;
+                svg.style.height = `${size}rem`;
+            }
 
-            const duration = Math.random() * 20 + 15; // 15s to 35s
-            el.style.animationDuration = `${duration}s`;
+            // Scatter starting positions randomly on screen
+            const x = Math.random() * window.innerWidth;
+            const y = Math.random() * window.innerHeight;
+            el.style.transform = `translate3d(${x}px, ${y}px, 0) translate(-50%, -50%)`;
 
             floatingBg.appendChild(el);
 
-            // Clean up after animation
-            setTimeout(() => {
-                el.remove();
-            }, duration * 1000);
+            // Give each particle a specific orbit offset to form a cloud cluster shape
+            const angle = Math.random() * Math.PI * 2;
+            const distance = Math.random() * 150 + 60; // radius of cloud
+
+            nodes.push({
+                el: el,
+                x: x,
+                y: y,
+                vx: 0,
+                vy: 0,
+                offsetX: Math.cos(angle) * distance,
+                offsetY: Math.sin(angle) * distance,
+                springStrength: Math.random() * 0.03 + 0.015,
+                damping: Math.random() * 0.05 + 0.85
+            });
         }
 
-        // Initial batch to populate the screen
-        for (let i = 0; i < 12; i++) {
-            setTimeout(createFloatingLanguage, Math.random() * 5000);
+        // Initialize particles
+        backgroundLanguages.forEach(lang => createNode(true, lang));
+        logoKeys.forEach(logo => createNode(false, logo));
+        // Add a few more languages to make the cloud dense
+        for (let i = 0; i < 5; i++) {
+            createNode(true, backgroundLanguages[i % backgroundLanguages.length]);
         }
 
-        // Keep generating new ones over time
-        setInterval(createFloatingLanguage, 2500);
+        // Damping / Spring simulation loop
+        function updatePhysics() {
+            nodes.forEach(node => {
+                const idealX = targetX + node.offsetX;
+                const idealY = targetY + node.offsetY;
+
+                // Hooke's Law: acceleration proportional to displacement
+                const ax = (idealX - node.x) * node.springStrength;
+                const ay = (idealY - node.y) * node.springStrength;
+
+                node.vx = (node.vx + ax) * node.damping;
+                node.vy = (node.vy + ay) * node.damping;
+
+                node.x += node.vx;
+                node.y += node.vy;
+
+                // Screen boundaries bounce
+                if (node.x < 0) { node.x = 0; node.vx *= -0.5; }
+                if (node.x > window.innerWidth) { node.x = window.innerWidth; node.vx *= -0.5; }
+                if (node.y < 0) { node.y = 0; node.vy *= -0.5; }
+                if (node.y > window.innerHeight) { node.y = window.innerHeight; node.vy *= -0.5; }
+
+                node.el.style.transform = `translate3d(${node.x}px, ${node.y}px, 0) translate(-50%, -50%)`;
+            });
+
+            requestAnimationFrame(updatePhysics);
+        }
+
+        // Handle viewport resize
+        window.addEventListener('resize', () => {
+            targetX = window.innerWidth / 2;
+            targetY = window.innerHeight / 2;
+        });
+
+        // Run simulation
+        updatePhysics();
     </script>
 </body>
 
